@@ -1,19 +1,19 @@
-const sendButton = document.getElementById('send');
-const getText = document.getElementById('toTranslate').value;
+let isResponse = ()=>{
+   $.ajax({
+      type: 'POST',
+      url: 'http://108.61.210.25:8030/translate_text',
+      data: ({key: '11111111111111111a111111111111111111111', text: $('.inputText').val(), lf: "en", lt: "ru"}),
+      success:(data)=>{
+          let result =  JSON.parse(data);
+          $('span').html(result.translated_text);
+      },
+      error:(xhr)=>{
+          console.log(xhr.status);
+          alert('Error ' + xhr.status + ', try again')
+      }
+  })
+};
 
-let formData = new FormData();
-formData.append('key', '11111111111111111a111111111111111111111');
-formData.append('text', 'apple'); formData.append('lf', 'en'); formData.append('lt', 'ru');
-fetch("http://108.61.210.25:8030/translate_text",
-    {
-        body: formData,
-        method: "post"
-    }).then(function (response) {
-        return response;
-});
-
-
-
-
+$('.translateButton').click(isResponse);
 
 
